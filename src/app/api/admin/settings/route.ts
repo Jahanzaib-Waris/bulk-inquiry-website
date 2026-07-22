@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
 import { supabaseAdmin } from "@/lib/supabase/admin";
+import { SITE_SETTINGS_TAG } from "@/lib/site-settings";
 import { requireAdmin } from "@/lib/require-admin";
 
 export async function PATCH(req: NextRequest) {
@@ -23,5 +25,6 @@ export async function PATCH(req: NextRequest) {
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
+  revalidateTag(SITE_SETTINGS_TAG, { expire: 0 });
   return NextResponse.json({ ok: true });
 }

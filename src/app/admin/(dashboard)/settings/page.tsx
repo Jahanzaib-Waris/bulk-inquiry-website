@@ -9,9 +9,12 @@ export const dynamic = "force-dynamic";
 export default async function SettingsPage() {
   const settings = await getSiteSettings();
   const supabase = await supabaseServer();
+  // getSession() reads the already-verified session from cookies with no
+  // network round-trip — safe here since the proxy already called the
+  // network-verified getUser() to gate this route before we ever render.
   const {
-    data: { user },
-  } = await supabase.auth.getUser();
+    data: { session },
+  } = await supabase.auth.getSession();
 
   return (
     <div className="max-w-2xl space-y-10">
@@ -30,9 +33,9 @@ export default async function SettingsPage() {
 
       <section className="rounded-lg border border-slate-200 bg-white p-6">
         <h2 className="font-medium text-slate-900">Password</h2>
-        <p className="mt-1 text-sm text-slate-500">Change the password for {user?.email}.</p>
+        <p className="mt-1 text-sm text-slate-500">Change the password for {session?.user.email}.</p>
         <div className="mt-5">
-          <ChangePasswordForm email={user?.email ?? ""} />
+          <ChangePasswordForm email={session?.user.email ?? ""} />
         </div>
       </section>
     </div>

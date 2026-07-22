@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
 import { supabaseAdmin } from "@/lib/supabase/admin";
-import { SITE_ASSETS_BUCKET } from "@/lib/site-settings";
+import { SITE_ASSETS_BUCKET, SITE_SETTINGS_TAG } from "@/lib/site-settings";
 import { requireAdmin } from "@/lib/require-admin";
 
 const MAX_LOGO_BYTES = 2 * 1024 * 1024; // 2MB
@@ -47,5 +48,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: updateError.message }, { status: 500 });
   }
 
+  revalidateTag(SITE_SETTINGS_TAG, { expire: 0 });
   return NextResponse.json({ ok: true, logo_url: publicUrl.publicUrl });
 }
