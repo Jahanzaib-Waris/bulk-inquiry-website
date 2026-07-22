@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { getSiteSettings } from "@/lib/site-settings";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,10 +13,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Bulk Inquiry",
-  description: "Submit a bulk inquiry with reference images and we'll follow up by email.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings();
+  return {
+    title: settings.site_name,
+    description: "Submit a bulk inquiry with reference images and we'll follow up by email.",
+  };
+}
 
 export default function RootLayout({
   children,
