@@ -8,3 +8,10 @@ export interface Inquiry {
   status: InquiryStatus;
   created_at: string;
 }
+
+export interface SiteSettings {
+  id: number;
+  site_name: string;
+  logo_url: string | null;
+  updated_at: string;
+}

@@ -1,6 +1,6 @@
 export function AboutSection() {
   return (
-    <section id="about" className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
+    <section id="about" className="scroll-mt-16 mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
       <div className="grid gap-6 sm:grid-cols-3 sm:gap-10">
         <div className="sm:col-span-1">
           <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
